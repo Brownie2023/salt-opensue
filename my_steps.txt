@@ -1,0 +1,44 @@
+Vagrant openSUSE SaltStack
+
+1. Installed Vagrant 1.8.7 for OS X from https://www.vagrantup.com/
+2. Cloned  https://github.com/UtahDave/salt-vagrant-demo
+3. ran 'vagrant up' and received errors:
+  - /opt/vagrant/embedded/gems/gems/vagrant-1.8.7/plugins/provisioners/salt/provisioner.rb:9: warning: wrong element type String at 0 (expected array)
+    /opt/vagrant/embedded/gems/gems/vagrant-1.8.7/plugins/provisioners/salt/provisioner.rb:9: warning: ignoring wrong elements is deprecated, remove them explicitly
+    ...
+4. Fixed by downgrading to Vagrant 1.8.6
+  - Remember to remove /opt/vagrant on OS X (vagrant should include this in their docs)
+5. Ran 'vagrant up'
+  - SUCCESS
+5.1 - decided to move over to my windows desktop and run opensuse servers in vagrant
+  - installed vagrant 1.8.6
+  - switched Vagrantfile master_config.vm.box && minion_config.vm.box to "bento/opensuse-leap-42.1"
+  - ran 'vagrant up'
+  - used putty to ssh into master and minions
+6. /var/log/salt/master && /var/cache/salt permission issues running salt commands
+  - rather than dealing with permissions I just switched to su
+7. ssh into master & minions:
+  master - ssh 192.168.50.10 -l vagrant
+  minion1 - ssh 192.168.50.11 -l vagrant
+  minion2 - ssh 192.168.50.12 -l vagrant
+8. nettools.sls && examples.sls created while going over the tutorial @ https://docs.saltstack.com/en/getstarted/fundamentals/index.html
+9. THE GOAL:
+  - create a web app on server(minion1) that connects to a separate db server(minion2)
+10. web_services.web_services.sls:
+  - need to automate the install of apache and pythons pip
+  - pip needs to install the flask and sqlalchemy packages for out to-do app
+11. web_services.vhost.sls:
+  - push example_site.conf file for virtual host to /etc/apache2/vhost.d/
+12. web_services.site.sls:
+  - push flask app(site dir) to /srv/www/htdocs/
+13. postgres.postgres_service.sls:
+  - install postgres 9.4 server and run service
+  - need to automate setting up new user and db for app
+
+
+TO-DO
+11. automate dbs and user setup on minion2
+12. Set up flask app to point to minion2 postgres install and db.
+  - probably a simple  to-do app
+
+NEED TO LOOK AT APACHE2 CONFIGURATION, IT DIFFERS FROM APACHE!
