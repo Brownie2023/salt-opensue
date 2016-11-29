@@ -12,3 +12,6 @@ api_manager.create_api(Todo, methods=['GET', 'POST', 'DELETE', 'PUT'])
 @app.route('/')
 def index():
     return app.send_static_file("index.html")
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')

@@ -10,11 +10,12 @@ install_web_packages:
       - postgresql94-devel
 
   pip.installed:
+    - pkgs:
     #install flask tools using pip
-    - name: flask
-    - name: flask-sqlalchemy
-    - name: psycopg2
-    - name: Flask-Restless
+      - flask
+      - flask-sqlalchemy
+      - psycopg2
+      - Flask-Restless
 
 apache2:
   service.running:

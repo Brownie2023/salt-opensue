@@ -1,8 +1,8 @@
 =================
-Salt Vagrant Demo
+Salt Vagrant OpenSUSE Web Application Demo
 =================
 
-A Salt Demo using Vagrant.
+A Salt State/Executable generated web application using Vagrant w/ OpenSUSE.
 
 
 Instructions
@@ -13,12 +13,12 @@ already be installed.
 
 .. code-block:: bash
 
-    git clone https://github.com/UtahDave/salt-vagrant-demo.git
-    cd salt-vagrant-demo
+    git clone https://github.com/Brownie2023/salt-opensue.git
+    cd salt-opensuse
     vagrant up
 
 
-This will download an Ubuntu  VirtualBox image and create three virtual
+This will download an OpenSUSE  VirtualBox image and create three virtual
 machines for you. One will be a Salt Master named `master` and two will be Salt
 Minions named `minion1` and `minion2`.  The Salt Minions will point to the Salt
 Master and the Minion's keys will already be accepted. Because the keys are
@@ -31,4 +31,15 @@ using Salt.
 .. code-block:: bash
 
     vagrant ssh master
-    sudo salt \* test.ping
+    su  #password: vagrant
+    salt '*' state.apply
+    salt 'minion1' state.apply postgres.create_db
+    salt 'minion1' state.apply web_services.run_site
+
+Lastly, navigate to
+.. code-block:: bash
+    192.168.50.11
+on a web browser on your local network!
+
+Thanks to https://github.com/UtahDave and all of the other contributors to this
+salt vagrant demo template.

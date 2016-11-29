@@ -38,21 +38,31 @@ Vagrant openSUSE SaltStack
 15. Added 192.168.50.11 www.todosuse.com to my local hosts (\Windows\System32\drivers\etc\hosts) file so I can go to the url in browser rather than ip
 16. edited postgresql.conf to listen on '*' and run on port 5432 and pg_hba.conf to allow connections from windows descktop and minion1.
   - pg_hba.conf is giving me some errors right now causing postgres to be dead
-  - for some reason all I need to do was add the ip-mask.
+  - for some reason all I need to do was add the subnet mask.
 17. Starting to build to do app
   - need to automate creating the todo table with python
     columns: title(string)    complete(bool)    date_created(date)    date_completed(date)
   - models.py - models my todo list table
   - create_db.py - creates table from models & creates an initial todo for my app
+  - todoapp.py - this is my flask app
 18. I need psycopg2 to be able to run this app and I cannoot get it installed via salt to save my life!!!!!!!
   - restarting servers for some reason finally allowed postgresql94-develpackage to be installed. I was getting some oss error earlier
 19. salt 'minion1' state.apply postgres.create_db - this creates the relation for out app in inserts an initial tuple
 20. Got my app built using Flask, SQLAlchemy, psycopg2, Flask_Restless, AngularJS, Postgres
-21. just need to automate starting the app. Then we're DONE!!!!
+21. web_services.run_site.sls - starts the flask app for us!
+
+Note: Was getting a:
+    psql: could not connect to server: No such file or directory
+        Is the server running locally and accepting
+        connections on Unix domain socket "/var/run/postgresql/.s.PGSQL.5432"?
+    error earlier. There was some timing issues I believe with running postgres initdb command.
+    Some postgres.postgres_service.sls changes based on https://github.com/pgexperts/saltstack-talk-examples/blob/master/srvsalt/02-postgresql/postgresql/init.sls
+    helped a lot.
 
 To-run:
 vagrant up
 master: su
 master: salt '*' state.apply
 master: salt 'minion1' state.apply postgres.create_db
-one more to run app and thats it
+master: salt 'minion1' state.apply web_services.run_site
+navigate to 192.168.50.11 in a local network web browser
