@@ -43,9 +43,9 @@ Lastly, navigate to
 
 .. code-block:: bash
 
-    192.168.50.11
-    
+    http://192.168.50.11
+
 on a web browser on your local network!
 
-Thanks to https://github.com/UtahDave and all of the other contributors to this
+Thanks to https://github.com/UtahDave (cloned from here) and all of the other contributors to this
 salt vagrant demo template.
