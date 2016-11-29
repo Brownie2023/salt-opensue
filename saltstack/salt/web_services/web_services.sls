@@ -17,6 +17,7 @@ install_web_packages:
       - psycopg2
       - Flask-Restless
 
+#Make sure apache is running
 apache2:
   service.running:
     - enable: True

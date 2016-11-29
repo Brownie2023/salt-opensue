@@ -4,6 +4,7 @@ install_postgres:
       #install postgres
       - postgresql94-server
 
+# Initialize our postgres database
 pg-initdb:
   cmd.wait:
   - name: initdb -D /var/lib/pgsql/data -E UTF8 --locale C && rm -f /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/postgresql.conf
@@ -11,6 +12,7 @@ pg-initdb:
   - watch:
     - pkg: install_postgres
 
+# Replace our conf files so other computers can connect and postgres is running on :5432
 postgres_conf:
   file.managed:
     - name: /var/lib/pgsql/data/postgresql.conf
@@ -33,6 +35,7 @@ pg_hba_conf:
     - require:
         - cmd: pg-initdb
 
+# Make sure postgres is running
 postgresql:
   service.running:
     - enable: True
@@ -40,6 +43,7 @@ postgresql:
       - file: /var/lib/pgsql/data/postgresql.conf
       - file: /var/lib/pgsql/data/pg_hba.conf
 
+# Set up our user and databse for app
 postgres-database-setup:
   postgres_user:
     - present

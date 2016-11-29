@@ -16,7 +16,7 @@ Vagrant openSUSE SaltStack
   - ran 'vagrant up'
   - used putty to ssh into master and minions
 6. /var/log/salt/master && /var/cache/salt permission issues running salt commands
-  - rather than dealing with permissions I just switched to su
+  - rather than dealing with permissions I just switched to su, password is vagrant
 7. ssh into master & minions:
   master - ssh 192.168.50.10 -l vagrant
   minion1 - ssh 192.168.50.11 -l vagrant
@@ -36,7 +36,7 @@ Vagrant openSUSE SaltStack
   - need to automate setting up new user and db for app
 14. Was getting an apache is running but dead error. SSH'd into minion1 and found that there was a syntax error in my eample.conf file by running 'sudo systemctl status httpd.service'
 15. Added 192.168.50.11 www.todosuse.com to my local hosts (\Windows\System32\drivers\etc\hosts) file so I can go to the url in browser rather than ip
-16. edited postgresql.conf to listen on '*' and run on port 5432 and pg_hba.conf to allow connections from windows descktop and minion1.
+16. edited postgresql.conf to listen on '*' and run on port 5432 and pg_hba.conf to allow connections from my desktop and minion1.
   - pg_hba.conf is giving me some errors right now causing postgres to be dead
   - for some reason all I need to do was add the subnet mask.
 17. Starting to build to do app
@@ -47,6 +47,7 @@ Vagrant openSUSE SaltStack
   - todoapp.py - this is my flask app
 18. I need psycopg2 to be able to run this app and I cannoot get it installed via salt to save my life!!!!!!!
   - restarting servers for some reason finally allowed postgresql94-develpackage to be installed. I was getting some oss error earlier
+  - after getting postgres94-devel installed, psycopg2 could install via pip
 19. salt 'minion1' state.apply postgres.create_db - this creates the relation for out app in inserts an initial tuple
 20. Got my app built using Flask, SQLAlchemy, psycopg2, Flask_Restless, AngularJS, Postgres
 21. web_services.run_site.sls - starts the flask app for us!

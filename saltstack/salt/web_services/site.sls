@@ -1,3 +1,4 @@
+# add our site dir to the server dir where apache looks
 site_conf:
   file.recurse:
     - user: root

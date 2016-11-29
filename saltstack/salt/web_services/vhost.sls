@@ -1,3 +1,4 @@
+# add vhost conf file to apache for our site
 apache_conf:
   file.managed:
     - name: /etc/apache2/vhosts.d/example.conf
