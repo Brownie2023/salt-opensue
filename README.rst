@@ -29,7 +29,7 @@ Minion1 in my little demo here is used to host a Angular and Flask web app.
 Minion2 is used to host the PostgreSQL database, which our web app connects to.
 
 You can then run the following commands to log into the Salt Master and begin
-using Salt.
+using Salt to start and configure our services.
 
 .. code-block:: bash
 
@@ -40,7 +40,11 @@ using Salt.
     salt 'minion1' state.apply web_services.run_site  #starts our flask app
 
 Lastly, navigate to
+
+.. code-block:: bash
+
     192.168.50.11
+    
 on a web browser on your local network!
 
 Thanks to https://github.com/UtahDave and all of the other contributors to this
